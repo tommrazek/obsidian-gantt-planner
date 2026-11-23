@@ -1,0 +1,312 @@
+/* Gantt Planner — styles scoped to the plugin view. Colours follow Obsidian's light/dark mode. */
+.workspace-leaf-content .view-content.gantt-planner{padding:0;height:100%;position:relative}
+  .gantt-planner{
+    --bg:#0a1119;
+    --panel:#16222e;
+    --card:#1c2a38;
+    --card-hi:#243547;
+    --field:#0e1821;
+    --grid:#27394c;
+    --grid-strong:#44607b;
+    --ink:#eff5fa;
+    --ink-dim:#a6bace;
+    --ink-faint:#7389a0;
+    --today:#ffb454;
+    --danger:#ff7a6b;
+    --c-mission:#7cc4ff;
+    --c-docking:#5ce1c0;
+    --c-layout:#b39ddb;
+    --c-model:#f2a3c7;
+    --c-tlo:#9fd356;
+    --c-impulse:#ffb454;
+    --c-nozzle:#ff8a6b;
+    --gate:#ffd166;
+    --gate-bg:#231f15;
+    --wip-glow:#1d4a55;
+    --danger-br:#5a3733;
+    --danger-bg:#2a1a18;
+    --chip-ink:var(--panel);
+    --mono: var(--font-interface);
+  }
+  .theme-light .gantt-planner{
+    --bg:#eef1f5;
+    --panel:#ffffff;
+    --card:#ffffff;
+    --card-hi:#e9eef4;
+    --field:#ffffff;
+    --grid:#cfd9e3;
+    --grid-strong:#94a7b8;
+    --ink:#14202b;
+    --ink-dim:#44586b;
+    --ink-faint:#6e8599;
+    --today:#c2680c;
+    --danger:#c0392b;
+    --danger-br:#e0b4ae;
+    --danger-bg:#faeceb;
+    --c-mission:#3d9ae0;
+    --c-docking:#2bb89a;
+    --c-layout:#9a7fd0;
+    --c-model:#e07aa6;
+    --c-tlo:#79b02f;
+    --c-impulse:#e09326;
+    --c-nozzle:#e56c4c;
+    --gate:#e0a515;
+    --gate-bg:#fcf3dc;
+    --wip-glow:#d6f5fa;
+  }
+  .gantt-planner *{box-sizing:border-box}
+  .gantt-planner [hidden]{display:none !important}
+  .gantt-planner{margin:0;height:100%}
+  .gantt-planner{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--mono);font-size:13px;
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .gantt-planner header{
+    padding:12px 18px;border-bottom:1px solid var(--grid-strong);background:var(--panel);
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .gantt-planner h1{font-size:14px;margin:0;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+     padding:4px 7px;border:1px solid transparent;border-radius:3px;min-width:60px;outline:none}
+  .gantt-planner h1:hover{border-color:var(--grid)}
+  .gantt-planner h1:focus{border-color:var(--today);background:var(--field)}
+  .gantt-planner #vault{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink);
+         background:transparent;border-color:transparent;padding:4px 7px}
+  .gantt-planner #vault:hover{border-color:var(--grid);background:var(--card)}
+  .gantt-planner .sub{color:var(--ink-faint);font-size:11px;letter-spacing:.04em}
+  .gantt-planner .spacer{flex:1}
+  .gantt-planner button{
+    font-family:var(--mono);font-size:var(--font-ui-small);letter-spacing:0;
+    background:var(--card);color:var(--ink-dim);border:1px solid var(--grid);
+    padding:6px 11px;border-radius:2px;cursor:pointer;white-space:nowrap;
+  }
+  .gantt-planner button:hover{color:var(--ink);background:var(--card-hi);border-color:var(--grid-strong)}
+  .gantt-planner button:focus-visible{outline:2px solid var(--today);outline-offset:2px}
+  .gantt-planner button.danger{color:var(--danger);border-color:var(--danger-br)}
+  .gantt-planner button.danger:hover{background:var(--danger-bg);color:var(--danger)}
+  .gantt-planner button.mini{font-size:9px;padding:2px 6px;letter-spacing:.06em}
+  .gantt-planner .tabs{display:flex;flex-wrap:wrap;border:1px solid var(--grid-strong);border-radius:3px;overflow:hidden}
+  .gantt-planner .tabs button{border:0;border-right:1px solid var(--grid);border-radius:0;background:transparent}
+  .gantt-planner .tabs button:last-child{border-right:0}
+  .gantt-planner .tabs button.on{background:var(--card-hi);color:var(--ink)}
+
+  .gantt-planner #ownerbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px 18px;background:var(--panel);
+            border-bottom:1px solid var(--grid-strong)}
+  .gantt-planner #ownerbar .lbl{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-right:4px}
+  .gantt-planner #ownerbar button{text-transform:none;letter-spacing:.02em;padding:3px 9px;border-radius:10px}
+  .gantt-planner #ownerbar button.on{background:var(--today);border-color:var(--today);color:var(--panel)}
+  .gantt-planner #ownerbar .n{opacity:.65;margin-left:5px;font-size:9.5px}
+
+  .gantt-planner #scroller{flex:1;overflow:auto;position:relative}
+  .gantt-planner #inner{position:relative;min-width:max-content}
+
+  .gantt-planner .timehead{
+    position:sticky;top:0;z-index:6;background:var(--panel);
+    border-bottom:1px solid var(--grid-strong);height:44px;
+  }
+  .gantt-planner .qtr{position:absolute;top:0;height:22px;border-left:1px solid var(--grid-strong);
+       color:var(--ink-dim);font-size:10.5px;letter-spacing:.16em;padding:5px 0 0 7px}
+  .gantt-planner .mon{position:absolute;top:22px;height:22px;border-left:1px solid var(--grid);
+       color:var(--ink-faint);font-size:10px;letter-spacing:.06em;padding:6px 0 0 7px}
+
+  .gantt-planner .row{position:relative;height:30px;border-bottom:1px solid rgba(39,57,76,.6)}
+  .gantt-planner .row.grouphead{height:30px;border-bottom:1px solid var(--grid-strong)}
+  .gantt-planner .row:hover .lane{background:var(--card-hi);opacity:.55}
+
+  .gantt-planner .label{
+    position:sticky;left:0;z-index:4;width:330px;height:100%;
+    display:flex;align-items:center;gap:6px;padding:0 12px 0 16px;white-space:nowrap;
+    background:var(--panel);
+    border-right:1px solid var(--grid-strong);font-size:12px;
+  }
+  .gantt-planner .grouphead .label{
+    letter-spacing:.18em;text-transform:uppercase;font-size:10.5px;color:var(--ink-dim);
+    background:var(--card);
+  }
+  .gantt-planner .grouphead .lane{background:transparent}
+  .gantt-planner .subhead .label{padding-left:24px;font-size:11px;font-weight:600;color:var(--ink-dim)}
+  .gantt-planner .row.nested .label{padding-left:34px}
+  .gantt-planner .swatch{width:3px;height:15px;border-radius:2px;flex:none}
+  .gantt-planner .name{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px}
+  .gantt-planner .owner{font-size:9px;letter-spacing:.06em;color:var(--chip-ink);background:var(--ink-dim);
+         padding:1px 5px;border-radius:2px;flex:none}
+  .gantt-planner .tag{font-size:9px;letter-spacing:.1em;color:var(--ink-dim);border:1px solid var(--grid-strong);
+       padding:1px 4px;border-radius:2px;flex:none}
+
+  .gantt-planner .lane{position:absolute;inset:0;left:330px;right:0}
+
+  .gantt-planner .bar{
+    position:absolute;top:50%;transform:translateY(-50%);height:22px;border-radius:3px;cursor:grab;
+    display:flex;align-items:center;padding:0 8px;overflow:hidden;
+    font-size:10.5px;color:#0b1620;white-space:nowrap;
+    box-shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+  .gantt-planner .bar:hover{outline:1px solid var(--ink);outline-offset:1px}
+  .gantt-planner .gate:hover i{box-shadow:0 0 0 5px rgba(255,209,102,.28)}
+  .gantt-planner .bar.dragging{cursor:grabbing;filter:brightness(1.12);z-index:3}
+  .gantt-planner .bar .grip{position:absolute;top:0;bottom:0;width:8px;cursor:ew-resize}
+  .gantt-planner .bar .grip.l{left:0} .gantt-planner .bar .grip.r{right:0}
+  .gantt-planner .bar.done{opacity:.5}
+  .gantt-planner .bar.progress{background-image:repeating-linear-gradient(45deg,rgba(0,0,0,.16) 0 5px,transparent 5px 10px)}
+  .gantt-planner .bar .dates{margin-left:auto;padding-left:10px;opacity:.68;font-size:9.5px}
+
+  .gantt-planner .gate{position:absolute;top:50%;transform:translateY(-50%);height:20px;width:20px;margin-left:-10px;cursor:grab}
+  .gantt-planner .gate i{display:block;width:11px;height:11px;margin:4px auto;background:var(--gate);
+          transform:rotate(45deg);box-shadow:0 0 0 3px rgba(255,209,102,.2)}
+
+  .gantt-planner .vline{position:absolute;top:44px;bottom:0;width:1px;background:var(--grid);pointer-events:none}
+  .gantt-planner .vline.q{background:var(--grid-strong)}
+  .gantt-planner .vline.wk{opacity:.35}
+  .gantt-planner .vline.today{background:var(--today);opacity:.65}
+
+  .gantt-planner svg#links{position:absolute;top:0;left:330px;pointer-events:none;z-index:2;overflow:visible}
+  .gantt-planner #links path{fill:none;stroke:var(--ink-faint);stroke-width:1;opacity:.45}
+  .gantt-planner #links path.hot{stroke:var(--today);opacity:1;stroke-width:1.5}
+
+  .gantt-planner #tip{
+    position:fixed;z-index:20;max-width:360px;pointer-events:none;opacity:0;
+    background:var(--card);border:1px solid var(--grid-strong);border-radius:4px;
+    padding:10px 12px;font-size:11px;line-height:1.45;
+    box-shadow:0 14px 34px rgba(0,0,0,.4);
+  }
+  .gantt-planner #tip.on{opacity:1}
+  .gantt-planner #tip b{display:block;font-weight:600;margin-bottom:6px;color:var(--ink)}
+  .gantt-planner #tip dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px}
+  .gantt-planner #tip dt{color:var(--ink-faint);letter-spacing:.06em;font-size:10px;text-transform:uppercase}
+  .gantt-planner #tip dd{margin:0;color:var(--ink-dim);white-space:pre-line}
+  .gantt-planner #tip .warn{color:var(--today)}
+
+  /* ---- tech tree ---- */
+  .gantt-planner #treewrap{flex:1;overflow:auto;padding:46px 28px 28px}
+  .gantt-planner #tree{position:relative}
+  .gantt-planner #tree svg{position:absolute;inset:0;overflow:visible;pointer-events:none}
+  .gantt-planner #tree svg path{fill:none;stroke:var(--ink-faint);stroke-width:1;opacity:.5}
+  .gantt-planner #tree svg path.hot{stroke:var(--today);opacity:1;stroke-width:1.6}
+  .gantt-planner .node{
+    position:absolute;width:186px;border-radius:4px;padding:8px 10px;
+    background:var(--card);border:1px solid var(--grid);border-left:3px solid var(--ink-faint);
+    font-size:11px;line-height:1.35;cursor:default;z-index:1;
+    box-shadow:0 2px 6px rgba(0,0,0,.4);
+  }
+  .gantt-planner .node:hover{background:var(--card-hi);border-color:var(--grid-strong);z-index:3}
+  .gantt-planner .node .n{color:var(--ink);white-space:normal}
+  .gantt-planner .node .m{margin-top:5px;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+  .gantt-planner .node.linked{cursor:pointer}
+  .gantt-planner .node.ms{border-left-color:var(--gate);background:var(--gate-bg)}
+  .gantt-planner .node.progress{background:linear-gradient(135deg, var(--wip-glow) 0%, var(--card) 50%)}  /* glow from the top-left corner */
+  .gantt-planner .node.done{opacity:.55}
+  .gantt-planner .tier{position:absolute;top:-22px;font-size:9.5px;letter-spacing:.16em;color:var(--ink-dim)}
+
+  /* ---- gantt export ---- */
+  .gantt-planner #prettywrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .gantt-planner .pretty-bar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;padding:10px 18px;background:var(--panel);
+              border-bottom:1px solid var(--grid-strong)}
+  .gantt-planner .pretty-bar label{flex:1 1 170px;max-width:300px;display:flex;flex-direction:column;gap:5px;font-size:9.5px;
+                    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .gantt-planner #prettyframe{flex:1;width:100%;border:0;background:#fff}
+
+  /* ---- editor ---- */
+  .gantt-planner #editwrap{flex:1;display:flex;overflow:hidden}
+  .gantt-planner .ed-list{width:330px;border-right:1px solid var(--grid-strong);display:flex;flex-direction:column;background:var(--panel)}
+  .gantt-planner .ed-top{padding:10px;display:flex;gap:6px;border-bottom:1px solid var(--grid-strong)}
+  .gantt-planner .ed-top button{flex:1;padding:6px 4px}
+  .gantt-planner .ed-scroll{overflow:auto;flex:1;padding-bottom:16px}
+  .gantt-planner .ed-ghead{
+    display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);
+    border-top:1px solid var(--grid-strong);border-bottom:1px solid var(--grid);
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);
+    position:sticky;top:0;z-index:2;
+  }
+  .gantt-planner .ed-ghead .gs{width:3px;height:13px;border-radius:2px;flex:none}
+  .gantt-planner .ed-item{
+    display:flex;align-items:center;gap:7px;padding:7px 12px 7px 16px;cursor:pointer;
+    border-bottom:1px solid rgba(39,57,76,.5);font-size:11.5px;
+  }
+  .gantt-planner .ed-item:hover{background:var(--card)}
+  .gantt-planner .ed-item.sel{background:var(--card-hi);box-shadow:inset 3px 0 0 var(--today)}
+  .gantt-planner .ed-item .k{color:var(--ink-faint);font-size:9px}
+  .gantt-planner .ed-item .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gantt-planner .ed-item input[type=checkbox]{width:auto;flex:none;margin:0;padding:0;cursor:pointer;accent-color:var(--today)}
+  .gantt-planner .ed-item.isdone .t{color:var(--ink-faint);text-decoration:line-through}
+  .gantt-planner .ed-item.nested{padding-left:30px}
+  .gantt-planner .ed-shead{display:flex;align-items:center;gap:5px;padding:6px 12px 6px 16px;font-size:10.5px;font-weight:600;
+            color:var(--ink-dim);background:var(--bg);border-bottom:1px solid var(--grid)}
+  .gantt-planner .ed-shead .sn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gantt-planner .ed-shead.off .sn{color:var(--ink-faint);font-style:italic}
+  .gantt-planner .ed-form{flex:1;overflow:auto;padding:22px 26px 60px}
+  .gantt-planner .ed-card{
+    max-width:760px;background:var(--card);border:1px solid var(--grid-strong);
+    border-radius:5px;padding:18px 20px;box-shadow:0 3px 14px rgba(0,0,0,.35);
+  }
+  .gantt-planner .ed-card + .ed-card{margin-top:16px}
+  .gantt-planner .ed-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .gantt-planner .ed-head h2{font-size:13px;margin:0;font-weight:600;letter-spacing:.02em;
+              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:420px}
+  .gantt-planner .ed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 14px}
+  .gantt-planner .ed-grid label{display:flex;flex-direction:column;gap:5px;font-size:9.5px;
+                 letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .gantt-planner .ed-grid label.wide{grid-column:1/-1}
+  .gantt-planner input:not([type=checkbox]), .gantt-planner select:not(.dropdown), .gantt-planner textarea{
+    font-family:var(--mono);font-size:12px;letter-spacing:0;text-transform:none;
+    background:var(--field);border:1px solid var(--grid);color:var(--ink);
+    padding:7px 9px;border-radius:3px;width:100%;
+  }
+  .gantt-planner textarea{resize:vertical;line-height:1.4}
+  .gantt-planner input:focus, .gantt-planner select:focus, .gantt-planner textarea:focus{outline:none;border-color:var(--today)}
+  .gantt-planner input:disabled{opacity:.5}
+  .gantt-planner .ed-sub{display:flex;align-items:center;gap:10px;margin-bottom:12px;
+          font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .gantt-planner .hint{text-transform:none;letter-spacing:.02em;font-size:10.5px;color:var(--ink-faint);opacity:.85}
+  .gantt-planner .dep-cols{columns:2;column-gap:20px}
+  .gantt-planner .dep-g{break-inside:avoid;margin-bottom:12px}
+  .gantt-planner .dep-g > span{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+                color:var(--ink-faint);margin-bottom:5px}
+  .gantt-planner .dep{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:11px;cursor:pointer}
+  .gantt-planner .dep input{width:auto;padding:0;accent-color:var(--today)}
+  .gantt-planner .dep.off{opacity:.32;cursor:not-allowed}
+  .gantt-planner .ed-empty{color:var(--ink-faint);font-size:12px;line-height:1.6}
+  .gantt-planner .readout{font-size:11px;color:var(--ink-dim)}
+
+  .gantt-planner footer{
+    border-top:1px solid var(--grid-strong);padding:9px 18px;color:var(--ink-faint);background:var(--panel);
+    font-size:10.5px;letter-spacing:.05em;display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+  }
+  .gantt-planner .key{display:flex;align-items:center;gap:6px}
+  .gantt-planner .key i{width:10px;height:10px;border-radius:2px;display:block;flex:none}
+  .gantt-planner #legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .gantt-planner #status{color:var(--ink-dim)}
+  .gantt-planner #status.warn{color:var(--today)}
+  @media (prefers-reduced-motion:no-preference){.gantt-planner .bar{transition:left .12s ease, width .12s ease}}
+  .gantt-planner .bar.dragging{transition:none}
+
+/* header: tabs centred, actions on the right */
+.gantt-planner header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:8px 14px}
+.gantt-planner .hdr-side{display:flex;gap:6px;align-items:center}
+.gantt-planner .hdr-side.right{justify-content:flex-end}
+.gantt-planner button{height:auto;box-shadow:none}
+
+/* "Matching note … Link" under the note field */
+.gantt-planner .gp-notehint{grid-column:1/-1;margin-top:-6px;font-size:var(--font-ui-smaller);color:var(--ink-dim);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gantt-planner .gp-notehint:empty{display:none}
+.gantt-planner .gp-notehint b{color:var(--ink);font-weight:500}
+
+/* phases */
+.gantt-planner .pbar{position:absolute;top:50%;transform:translateY(-50%);height:8px;border-radius:2px;opacity:.6}
+.gantt-planner .ed-phase{cursor:pointer;user-select:none}
+.gantt-planner .ed-phase:hover{background:var(--card)}
+.gantt-planner .ed-phase .caret{width:10px;color:var(--ink-faint);flex:none}
+.gantt-planner .ed-phase .cnt{font-size:var(--font-ui-smaller);color:var(--ink-faint);font-weight:400}
+
+/* tech tree sort control in the header */
+
+/* phase rows: same background as task rows; bold and the caret set them apart */
+.gantt-planner .ed-phase{background:var(--panel)}
+.gantt-planner .ed-phase:hover{background:var(--background-modifier-hover, var(--card))}
+
+/* small icon buttons on section and phase rows */
+.gantt-planner button.mini.icon{display:inline-flex;align-items:center;justify-content:center;padding:2px 4px;line-height:1}
+.gantt-planner button.mini.icon svg{width:12px;height:12px}
+
+/* header controls built from Obsidian's own toggle and dropdown */
+.gantt-planner .gp-ctl{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-ui-small);color:var(--text-muted);white-space:nowrap}
