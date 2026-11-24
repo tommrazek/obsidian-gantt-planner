@@ -267,8 +267,8 @@ const rowsEl=$("rows"), head=$("timehead"),
 
 function computeRange(){
   if(!tasks.length){ T0=monFloor(TODAY-25*DAY); T1=monCeil(TODAY+120*DAY); return; }
-  const lo=Math.min(TODAY, ...tasks.map(t=>t.start));
-  const hi=Math.max(TODAY, ...tasks.map(t=>end(t)));
+  const lo=Math.min(TODAY, ...tasks.map(t=>t.deadline!=null ? Math.min(t.start, t.deadline) : t.start));
+  const hi=Math.max(TODAY, ...tasks.map(t=>t.deadline!=null ? Math.max(end(t), t.deadline) : end(t)));   // keep deadline dots in view
   T0=monFloor(lo-25*DAY); T1=monCeil(hi+25*DAY);
 }
 function buildHead(){
@@ -310,7 +310,7 @@ function buildRows(){
           ? `<div class="gate" data-id="${t.id}"><i></i></div>`
           : `<div class="bar ${t.state||""}" data-id="${t.id}" style="background:${g.c}">
                <span class="grip l"></span><span class="dates"></span><span class="grip r"></span>
-             </div>`}</div>
+             </div>`}${t.deadline!=null ? `<span class="dl" data-dl="${t.id}" title="Deadline ${fmt(t.deadline)}"></span>` : ""}</div>
       </div>`;
       });
     });
@@ -346,6 +346,7 @@ function paint(){
       el.querySelector(".dates").textContent=`${fmt(t.start)} → ${fmt(end(t))}`;
     }
   });
+  rowsEl.querySelectorAll(".dl").forEach(el=>{ const t=byId[el.dataset.dl]; if(t && t.deadline!=null) el.style.left=x(t.deadline)+"px"; });
   rowsEl.querySelectorAll(".pbar").forEach(el=>{          // phases follow their tasks, also mid-drag
     const sp=phaseSpan(tasks.filter(t=>t.phase===el.dataset.phase && visible(t)));
     el.style.display = sp ? "" : "none";

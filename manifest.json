@@ -1,7 +1,7 @@
 {
   "id": "gantt-planner",
   "name": "Gantt Planner",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "minAppVersion": "1.4.0",
   "description": "Plan tasks on a timeline, tech tree and Gantt export, with each task linked to a note whose frontmatter stays in sync.",
   "author": "Tom",

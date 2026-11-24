@@ -47,8 +47,8 @@ Older plans with separate "full names" are migrated into notes on load, as befor
   the task changes. Other keys, other tags and the note body are left alone. The sync
   is one way: edits to these keys in Obsidian are overwritten on the next change.
 - **Deadlines:** each task or milestone can have an optional deadline (editor field,
-  shown in the hover panel and the CSV). It's saved in the plan only and doesn't move
-  anything yet. Note: in task notes, `deadline:` is still the task's end date.
+  shown in the hover panel and the CSV, and as a red dot on the task's row in the
+  Timeline). It's saved in the plan only and doesn't move anything yet. Note: in task notes, `deadline:` is still the task's end date.
 - **Exports:** CSV, OpenProject CSV and the Gantt export's **Save HTML** are written
   next to the plan file.
 - Colours follow Obsidian's light/dark mode.

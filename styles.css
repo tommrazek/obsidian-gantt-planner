@@ -310,3 +310,7 @@
 
 /* header controls built from Obsidian's own toggle and dropdown */
 .gantt-planner .gp-ctl{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-ui-small);color:var(--text-muted);white-space:nowrap}
+
+/* deadline: a small red dot on the task's row, at the deadline date */
+.gantt-planner .dl{position:absolute;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;
+  background:#e5484d;box-shadow:0 0 0 1.5px var(--panel);z-index:3}
