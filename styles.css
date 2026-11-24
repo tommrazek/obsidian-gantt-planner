@@ -226,7 +226,7 @@
   .gantt-planner .ed-item.sel{background:var(--card-hi);box-shadow:inset 3px 0 0 var(--today)}
   .gantt-planner .ed-item .k{color:var(--ink-faint);font-size:9px}
   .gantt-planner .ed-item .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .gantt-planner .ed-item input[type=checkbox]{width:auto;flex:none;margin:0;padding:0;cursor:pointer;accent-color:var(--today)}
+  .gantt-planner .ed-item input[type=checkbox]{width:var(--checkbox-size,15px);height:var(--checkbox-size,15px);flex:none;margin:0;padding:0;cursor:pointer}
   .gantt-planner .ed-item.isdone .t{color:var(--ink-faint);text-decoration:line-through}
   .gantt-planner .ed-item.nested{padding-left:30px}
   .gantt-planner .ed-shead{display:flex;align-items:center;gap:5px;padding:6px 12px 6px 16px;font-size:10.5px;font-weight:600;
@@ -261,8 +261,9 @@
   .gantt-planner .dep-g{break-inside:avoid;margin-bottom:12px}
   .gantt-planner .dep-g > span{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
                 color:var(--ink-faint);margin-bottom:5px}
-  .gantt-planner .dep{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:11px;cursor:pointer}
-  .gantt-planner .dep input{width:auto;padding:0;accent-color:var(--today)}
+  .gantt-planner .dep{display:flex;align-items:center;gap:8px;padding:4px 6px;margin:0 -6px;border-radius:var(--radius-s,4px);font-size:12px;cursor:pointer}
+  .gantt-planner .dep:not(.off):hover{background:var(--background-modifier-hover, var(--card-hi))}
+  .gantt-planner .dep input{width:var(--checkbox-size,15px);height:var(--checkbox-size,15px);flex:none;margin:0;padding:0;cursor:pointer}
   .gantt-planner .dep.off{opacity:.32;cursor:not-allowed}
   .gantt-planner .ed-empty{color:var(--ink-faint);font-size:12px;line-height:1.6}
   .gantt-planner .readout{font-size:11px;color:var(--ink-dim)}
@@ -295,7 +296,10 @@
 .gantt-planner .pbar{position:absolute;top:50%;transform:translateY(-50%);height:8px;border-radius:2px;opacity:.6}
 .gantt-planner .ed-phase{cursor:pointer;user-select:none}
 .gantt-planner .ed-phase:hover{background:var(--card)}
-.gantt-planner .ed-phase .caret{width:10px;color:var(--ink-faint);flex:none}
+.gantt-planner .ed-phase .caret{width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;flex:none;
+  color:var(--text-muted, var(--ink-dim));transition:transform .12s ease}
+.gantt-planner .ed-phase .caret svg{width:14px;height:14px;stroke-width:2.5}
+.gantt-planner .ed-phase.open .caret{transform:rotate(90deg)}
 .gantt-planner .ed-phase .cnt{font-size:var(--font-ui-smaller);color:var(--ink-faint);font-weight:400}
 
 /* tech tree sort control in the header */

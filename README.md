@@ -62,8 +62,8 @@ as you move tasks. The tech tree ignores phases.
 
 - **Editor:** phases are collapsible rows under each section, all collapsed when the
   planner opens; selecting or adding a task opens its phase. The + on a section adds a
-  phase; the + and ◆ on a phase add a task or milestone. Right-click a section or phase
-  to rename it or delete it (when empty).
+  phase. Right-click a phase to add a task or milestone to it, rename it or delete it
+  (when empty); right-click a section to rename or delete it.
 - **Timeline and Gantt export:** the **Phases only** switch toggles between showing
   phases with their tasks and showing just the phases.
 - **Tech tree:** the **Sort** menu orders each column top to bottom by section, by

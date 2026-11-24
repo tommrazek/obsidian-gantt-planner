@@ -704,16 +704,17 @@ function edList(){
     phaseBlocks(g, selId).forEach(({phase,items})=>{
       const open=expanded.has(phase.id), any=tasks.some(t=>t.phase===phase.id);
       h+=`<div class="ed-shead ed-phase ${open?"open":""}" data-toggle="${phase.id}" title="Click to ${open?"collapse":"expand"} · right-click for options">
-          <span class="caret">${open?"▾":"▸"}</span>
+          <span class="caret" data-chevron="1">▸</span>
           <span class="sn">${esc(phase.name)}</span>
-          <button class="mini icon" data-addto="${g.id}" data-phase="${phase.id}" data-icon="plus" title="Add task" aria-label="Add task">+</button>
-          <button class="mini icon" data-addto="${g.id}" data-phase="${phase.id}" data-gate="1" data-icon="diamond" title="Add milestone" aria-label="Add milestone">◆</button>
         </div>`;
       if(open) items.forEach(t=>{ h+=item(t, true); });
     });
   });
   edListEl.innerHTML=h;
-  if(setIcon) edListEl.querySelectorAll("button[data-icon]").forEach(b=>{ b.textContent=""; setIcon(b, b.dataset.icon); });
+  if(setIcon){
+    edListEl.querySelectorAll("button[data-icon]").forEach(b=>{ b.textContent=""; setIcon(b, b.dataset.icon); });
+    edListEl.querySelectorAll("[data-chevron]").forEach(c=>{ c.textContent=""; setIcon(c, "chevron-right"); });   // rotated by CSS when open
+  }
 }
 
 function edForm(){
