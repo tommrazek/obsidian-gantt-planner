@@ -916,16 +916,17 @@ edFormEl.addEventListener("click", async e=>{
     edForm(); edList(); refreshViews(); persist(); return;
   }
   if(act==="del"){
-    const nf=noteFile(t), trash=!!nf && inTaskDir(nf);
+    // the note is kept; one in the tasks folder is moved aside so the folder scan won't re-add the task
+    const nf=noteFile(t), move=!!nf && inTaskDir(nf), dest=archiveDir(t.state==="done")+"/";
     if(!await confirmBox("Delete “"+(t.short||t.id)+"”?\nAny dependency on it is dropped as well."
-        +(trash?"\nIts note "+nf.path+" is moved to the trash too.":""), "Delete", "Cancel", true)) return;
+        +(move?"\nIts note is kept and moved to "+dest+".":""), "Delete", "Cancel", true)) return;
     tasks=tasks.filter(o=>o.id!==t.id);
     tasks.forEach(o=>o.deps=(o.deps||[]).filter(p=>p!==t.id));
     reindex(); settle(); select(null);
     computeRange(); buildLegend(); refreshViews(); persist();
-    if(trash){
-      try{ await (app.fileManager.trashFile ? app.fileManager.trashFile(nf) : app.vault.trash(nf, true)); }
-      catch(e){ setStatus("Couldn't move "+nf.path+" to the trash — "+e.message, true); }
+    if(move){
+      try{ setStatus("Note moved to "+await archiveNote(nf, t.state==="done"), false, true); }
+      catch(e){ setStatus("Couldn't move "+nf.path+" — "+e.message+" (the note is untouched)", true); }
     }
   }
   if(act==="snap"){
@@ -1360,7 +1361,27 @@ obsView.registerEvent(app.vault.on("rename", (file, oldPath)=>{
 const NOTE_STATE={"to do":"", doing:"progress", done:"done"};
 const NOTE_PRIO={low:"low", normal:"", high:"high"};
 const pendingNotes=new Set();                  // notes being created right now; not new tasks
-const inTaskDir=f=>f instanceof TFile && f.extension==="md" && f.path.startsWith(taskDir()+"/");
+// completed/ and deleted/ inside the tasks folder hold notes of removed tasks: never scanned
+const ARCHIVE_DIRS=["completed","deleted"];
+const isArchived=path=>{ const rest=path.slice(taskDir().length+1).toLowerCase(); return ARCHIVE_DIRS.some(d=>rest.startsWith(d+"/")); };
+const inTaskDir=f=>f instanceof TFile && f.extension==="md" && f.path.startsWith(taskDir()+"/") && !isArchived(f.path);
+// The planner never deletes a note. A removed task's note moves to completed/ (task was done)
+// or deleted/ (otherwise), reusing an existing folder of that name in any capitalisation.
+function archiveDir(done){
+  const want=done?"completed":"deleted", base=taskDir();
+  const folder=app.vault.getAbstractFileByPath(base);
+  const hit=((folder&&folder.children)||[]).find(c=>!(c instanceof TFile) && c.name.toLowerCase()===want)
+         || app.vault.getAbstractFileByPath(base+"/"+want[0].toUpperCase()+want.slice(1));
+  return hit ? hit.path : normalizePath(base+"/"+want);
+}
+async function archiveNote(f, done){
+  const dir=archiveDir(done);
+  await ensureFolder(dir);
+  let target=normalizePath(dir+"/"+f.name), n=2;
+  while(app.vault.getAbstractFileByPath(target)) target=normalizePath(dir+"/"+f.basename+" ("+(n++)+")."+f.extension);
+  await (app.fileManager.renameFile ? app.fileManager.renameFile(f, target) : app.vault.rename(f, target));
+  return target;
+}
 const taskNotes=()=>app.vault.getMarkdownFiles().filter(inTaskDir);
 const fmStr=v=>(typeof v==="string"||typeof v==="number") ? String(v).trim() : "";
 const fmDate=v=>{

@@ -91,8 +91,12 @@ gantt_id: t12                               # optional; filled in by the planner
 ```
 
 Other keys, tags and the note body are kept. Once a note is in the plan, the plan is
-the source of truth for these keys. Deleting a task in the editor moves its note in the
-tasks folder to the trash, otherwise it would be picked up again.
+the source of truth for these keys.
+
+The planner never deletes notes. Deleting a task in the editor keeps its note: if the note
+is in the tasks folder it's moved to `completed/` (the task was done) or `deleted/`
+(otherwise) inside the tasks folder, so it isn't picked up again. Those two folders are
+never scanned for tasks.
 
 There is no sample plan any more: with no plan file and no task notes, the planner starts
 empty, and the first section ("General") is created when you add a task.
